@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class Player extends Entity{
     private final Unit[] units;
     public Unit getUnit(int num) {

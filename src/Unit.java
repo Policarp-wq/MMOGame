@@ -62,7 +62,7 @@ public class Unit extends Entity{
         this.attack = attack;
     }
 
-    protected float getDamage() {return attack;};
+    protected float getDamage() {return attack;}
 
     public final void attackEnemy(Unit enemy){
         if(!enemy.isDead())
