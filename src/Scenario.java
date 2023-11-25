@@ -7,10 +7,13 @@ public class Scenario {
     public void welcome(){
         System.out.println(StringRes.YELLOW + "Welcome to the game! Please write player's build. Available units:\n" + StringRes.RESET);
         System.out.println(Unit.getAvailableUnitsString());
+        System.out.println(StringRes.SEPARATOR);
         System.out.println("First:");
         Player player1 = getPlayer();
+        System.out.println(StringRes.SEPARATOR);
         System.out.println("Second:");
         Player player2 = getPlayer();
+        System.out.println(StringRes.SEPARATOR);
         game = new Game("Kek", player1, player2);
         startGame();
     }
@@ -33,17 +36,25 @@ public class Scenario {
 
 
     private void playRound() {
+        System.out.println(StringRes.SEPARATOR);
+        System.out.println(StringRes.YELLOW + "*** Round " + round + " ***" + StringRes.RESET);
         ++round;
-        System.out.println(game.getPlayer1().Name + " Select your offence unit and enemy's defence unit");
+        var offencePlayer = game.getPlayer(round % 2 == 0 ? 2 : 1);
+        var defencePlayer = game.getPlayer(round % 2 == 0 ? 1 : 2);
+        System.out.println(StringRes.YELLOW + offencePlayer.Name + " Select your offence unit and enemy's defence unit" + StringRes.RESET);
         System.out.println(StringRes.GREEN + "Offence unit:\n");
-        var offence = selectUnit(game.getPlayer(round % 2 == 0 ? 2 : 1));
+        var offence = selectUnit(offencePlayer);
         System.out.println(StringRes.RESET);
         System.out.println(StringRes.RED + "Enemy unit:\n");
-        var defence = selectUnit(game.getPlayer(round % 2 == 0 ? 1 : 2));
+        var defence = selectUnit(defencePlayer);
         System.out.println(StringRes.RESET);
         game.attack(offence, defence);
+        System.out.println(StringRes.YELLOW + offencePlayer.Name + ": " + offence + "\n" +
+                defencePlayer.Name + ": " + defence + StringRes.RESET);
     }
     private void gameIsOver() {
+        System.out.println(StringRes.SEPARATOR);
+        System.out.println(StringRes.GREEN);
         if(game.getPlayer1().isAllUnitsDead() && game.getPlayer2().isAllUnitsDead()){
             System.out.println(StringRes.YELLOW + "Stalemate!" + StringRes.RESET);
         }
@@ -51,6 +62,7 @@ public class Scenario {
             System.out.println(game.getPlayer2().Name + " won!");
         }
         else System.out.println(game.getPlayer1().Name + " won!");
+        System.out.println(StringRes.RESET);
     }
     private Unit selectUnit(Player player){
         System.out.println("Select unit by typing unit's number");

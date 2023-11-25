@@ -26,6 +26,7 @@ public class Game extends Entity{
 
     public void attack(Unit offense, Unit defence){
         offense.attackEnemy(defence);
+        System.out.println();
     }
     public boolean isOver(){
         return player1.isAllUnitsDead() || player2.isAllUnitsDead();

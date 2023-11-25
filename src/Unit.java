@@ -1,7 +1,7 @@
 public class Unit extends Entity{
-    public static final float DEFAULTHEALTH = 100;
+    public static final float DEFAULTHEALTH = 50;
     public static final float DEFAULTARMOR = 10;
-    public static final float DEFAULTATTACK = 10;
+    public static final float DEFAULTATTACK = 12;
 
     public enum Units{
          Fighter, Wizard, Archer, Nicolas
@@ -32,10 +32,10 @@ public class Unit extends Entity{
 
     public static Unit getUnit(Units unit ){
         return switch (unit) {
-            case Fighter -> new Unit("Fighter", DEFAULTHEALTH * 1.2f, DEFAULTARMOR, DEFAULTATTACK);
+            case Fighter -> new Fighter("Fighter");
             case Wizard -> new Unit("Wizard", 0.7f * DEFAULTHEALTH, 0, 1.3f * DEFAULTATTACK);
             case Archer -> new Unit("Archer", DEFAULTHEALTH, 0.3f * DEFAULTARMOR, 1.1f * DEFAULTATTACK);
-            case Nicolas -> new Unit("Nicolas Cage", 0.1f * DEFAULTHEALTH, 0, 10 * DEFAULTATTACK);
+            case Nicolas -> new Unit("Nicolas Cage", 0.2f * DEFAULTHEALTH, 0, 5 * DEFAULTATTACK);
             default -> new Unit("Entity", 0, 0, 0);
         };
     }
@@ -69,11 +69,12 @@ public class Unit extends Entity{
             enemy.takeDamage(getDamage());
     }
     protected void takeDamage(float damage){
-        if(armor >= damage){
+        health -= (damage - armor) > 0 ? damage - armor: 0;
+        if(armor > 0){
             armor -= 0.7f * damage;
-            return;
+            if(armor < 0)
+                armor = 0;
         }
-        health -= (damage - armor);
         if(health <= 0)
             isDead = true;
     }
